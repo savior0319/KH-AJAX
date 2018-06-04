@@ -40,4 +40,34 @@
     ※ post 일 때 파라미터 값 설정 / get 일때는 매개변수 값 없음
 5. 응답 상태에 따라 상태 확인
     ※ readyState(데이터 응답) / status(처리결과) 값을 이용
-6. 응답 완료 처리 (resopnseText를 이용하여 처리)
+6. 응답 완료 처리 (responseText를 이용하여 처리)
+
+
+@ JQuery Ajax
+-> Ajax 통신을 JQuery로 작성하게 되면 훨씬 간단하게 구현할 수 있음
+-> 또한, JQuery로 Ajax를 구성하게 되면 크로스브라우징의 문제를 해결 해줌
+        ※ 크로스브라우징 : 다양한 브라우저들이 같은 화면을 동일하게 보여주는 것
+-> JQuery Ajax에서 가장 중요한 API는 '$.ajax' 임
+
+$.ajax의 기본 문법
+-> JQuery.ajax([settings]);
+혹은
+-> $.ajax([settings]);
+
+ex)
+$.ajax(
+    설정 값1,
+    설정 값2,
+    설정 값3,
+    설정 값4, ....
+);
+
+주요 속성
+
+url : 데이터를 전송 URL
+data : 서버에 전송할 데이터, key/value 형식의 객체
+dataType : 서버가 리턴하는 데이터 타입(xml, json, script, html)
+type : 서버로 전송하는 메소드 타입 (POST, GET)
+success : ajax 통신에 성공 했을 때 호출될 이벤트 핸들러
+error : ajax 통신에 실패 했을 때 호출될 이벤트 핸들러
+complete : ajax 통신 시 무조건 호출을 이벤트 핸들러

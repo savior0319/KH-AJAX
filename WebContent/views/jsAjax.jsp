@@ -17,13 +17,25 @@
 		<br>
 		<div class="ui container">
 			<div class="ui center aligned segment">
+				<h1>자바스크립트 Ajax</h1>
+				<!-- 	<div class="ui labeled input">
+				<div class="ui label">입력</div>
+				<input type="text" id="data1" />
+			</div>
+			<br>
+			<br>
+			<div class="ui labeled input">
+				<div class="ui label">출력</div>
+				<input type="text" id="div1" readonly="readonly" />
+			</div>
+			<br>
+			<br> -->
 				<div class="ui labeled input">
-					<div class="ui label">
-						입력
-					</div>
-					<input type="text" id="data1" />
+					<div class="ui label">아이디</div>
+					<input type="text" id="data1" onchange="test1();" />
 				</div>
-				<button class="ui secondary button" onclick="test1()">클릭</button>
+				<br>
+				<span id="div1"></span>
 			</div>
 		</div>
 	</body>
@@ -47,7 +59,7 @@
 			// 2 요청 정보 설정(method 방식, url 정보, 동기 / 비동기 설정)
 			// 마지막 false / true 값은 동기 / 비동기를 의미
 			// Ajax 처리이기 때문에 true를 사용
-			xhttp.open("GET", "/jsTest1=" + data, true)
+			xhttp.open("GET", "/jsTest1?data=" + data, true)
 
 			//POST 방식(쿼리 스트링에 값을 넣지 않음)
 			// xhttp.open("POST", "/jsTest1", true)
@@ -68,6 +80,14 @@
 				if (this.readyState == 4) {
 					if (this.status == 200) {
 						console.log("서버에 데이터 전송 성공");
+						var result = xhttp.responseText;
+						if (result == "1") {
+							document.getElementById("div1").innerHTML = "이미 사용중인 아이디입니다";
+							document.getElementById("div1").style.color = "red";
+						} else {
+							document.getElementById("div1").innerHTML = "사용 가능한 아이디입니다";
+							document.getElementById("div1").style.color = "blue";
+						}
 					} else if (this.status == 404) {
 						console.log("서버에 데이터 전송 실패");
 					}
