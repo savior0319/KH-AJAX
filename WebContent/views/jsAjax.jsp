@@ -30,7 +30,7 @@
 
 	<script type="text/javascript">
 		function test1() {
-			var data = document.getElementById("data1");
+			var data = document.getElementById("data1").value;
 			// Ajax 처리 순서 4단계
 			// 1. XMLHttpRequest 객체 생성
 			// 2. 요청 정보 설정
@@ -47,7 +47,7 @@
 			// 2 요청 정보 설정(method 방식, url 정보, 동기 / 비동기 설정)
 			// 마지막 false / true 값은 동기 / 비동기를 의미
 			// Ajax 처리이기 때문에 true를 사용
-			xhttp.open("GET", "/jsTest1" + data, true)
+			xhttp.open("GET", "/jsTest1=" + data, true)
 
 			//POST 방식(쿼리 스트링에 값을 넣지 않음)
 			// xhttp.open("POST", "/jsTest1", true)
@@ -80,7 +80,7 @@
 			// POST 방식 (POST 방식은 requestHeader를 변경해야함)
 			// xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			// xhttp.send("data" + data);
-			
+
 		}
 	</script>
 
