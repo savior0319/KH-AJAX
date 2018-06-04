@@ -29,7 +29,8 @@
 		}
 
 		#out3,
-		#out4 {
+		#out4,
+		#out5 {
 			width: 280px;
 			height: 230px;
 			border: 3px solid lightgray;
@@ -152,6 +153,18 @@
 				<br>
 				<br> 결과
 				<div id="out4"></div>
+			</div>
+
+			<div class="ui center aligned segment">
+				<h1>8. 서버로 기본형 데이터 여러개 전송, 서버에서 맵 형태의 객체 리턴 유저 정보(번호, 번호, 번호)</h1>
+				<div class="ui labeled input">
+					<div class="ui label">유저정보 순번</div>
+					<input type="text" id="userIndexs2" placeholder="입력" onchange="test8();" />
+				</div>
+				<br>
+				<br>
+				<br> 결과
+				<div id="out5"></div>
 			</div>
 
 			<br>
@@ -303,7 +316,6 @@
 				success: function (data) {
 					console.log('성공');
 
-
 					var result = "";
 
 					for (var i = 0; i < data.length; i++) {
@@ -311,6 +323,37 @@
 					}
 
 					$('#out4').html(result);
+				},
+				error: function () {
+					console.log('실패');
+				}
+			});
+		}
+
+		function test8() {
+			var $userIndexs = $('#userIndexs2').val();
+
+			$.ajax({
+				url: '/test8',
+				type: 'GET',
+				data: {
+					userIndexs: $userIndexs
+				},
+				success: function (data) {
+					console.log('성공');
+
+					var result = "";
+
+					var keys = Object.keys(data);
+					// JSON에서 MAP 형태로 꺼내오려면
+					// data[키] 형태로 꺼내오면 됨
+
+					for (var i = 0; i < keys.length; i++) {
+						result += "이름 : " + data[keys[i]].name + " / 나이 : " + data[keys[i]].age + " / 주소 : " + data[keys[i]].addr +
+							"<br>";
+					}
+
+					$('#out5').html(result);
 				},
 				error: function () {
 					console.log('실패');
