@@ -14,7 +14,10 @@
 	</head>
 
 	<style>
-		#myName {
+		#myName,
+		#value,
+		#num1,
+		#num2 {
 			margin-right: 5px;
 		}
 	</style>
@@ -30,6 +33,39 @@
 					<button onclick="test1();" class="ui blue button">클릭</button>
 				</div>
 			</div>
+
+			<div class="ui center aligned segment">
+				<h1>버튼 클릭 시 서버에서 보낸 값을 브라우저에서 출력</h1>
+				<div class="ui labeled input">
+					<div class="ui label">값 입력</div>
+					<input type="text" id="value" placeholder="입력" />
+					<button onclick="test2();" class="ui blue button">결과확인</button>
+				</div>
+				<br>
+				<br>
+				<div class="ui labeled input">
+					<div class="ui label">출력</div>
+					<input type="text" id="out" readonly="readonly" />
+				</div>
+			</div>
+
+			<div class="ui center aligned segment">
+				<h1>서버로 기본 값 전송하고, 결과를 받아 출력</h1>
+				<div class="ui labeled input">
+					<div class="ui label">첫번째 수</div>
+					<input type="text" id="num1" placeholder="입력" />
+					<div class="ui label">두번째 수</div>
+					<input type="text" id="num2" placeholder="입력" />
+					<button onclick="test3();" class="ui blue button">결과확인</button>
+				</div>
+				<br>
+				<br>
+				<div class="ui labeled input">
+					<div class="ui label">출력</div>
+					<input type="text" id="out1" readonly="readonly" />
+				</div>
+			</div>
+
 		</div>
 	</body>
 
@@ -53,6 +89,44 @@
 				},
 				complete: function () {
 					console.log('무적권 호출');
+				}
+			});
+		}
+
+		function test2() {
+			var $value = $('#value').val();
+
+			$.ajax({
+				url: "/test2",
+				data: {
+					value: $value
+				},
+				type: "GET",
+				success: function (result) {
+					$('#out').val(result);
+				},
+				error: function () {
+					$('#out').val("서버에서 전송 실패");
+				}
+			});
+		}
+
+		function test3() {
+			var $num1 = $('#num1').val();
+			var $num2 = $('#num2').val();
+
+			$.ajax({
+				url: "/test3",
+				data: {
+					num1: $num1,
+					num2: $num2
+				},
+				type: "GET",
+				success: function (result) {
+					$('#out1').val(result);
+				},
+				error: function () {
+					$('#out').val("서버에서 전송 실패");
 				}
 			});
 		}
