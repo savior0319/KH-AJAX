@@ -78,8 +78,9 @@
 			xhttp.send(); // GET 방식
 
 			// POST 방식 (POST 방식은 requestHeader를 변경해야함)
-/* 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhttp.send("data" + data); */
+			// xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			// xhttp.send("data" + data);
+			
 		}
 	</script>
 
