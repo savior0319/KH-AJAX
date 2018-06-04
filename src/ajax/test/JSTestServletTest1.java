@@ -1,4 +1,4 @@
-package js.test;
+package ajax.test;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "JSTest3Servlet", urlPatterns = { "/test3" })
-public class JSTestServletTest4 extends HttpServlet {
+@WebServlet(name = "JSTestServlet", urlPatterns = { "/jsTest1" })
+public class JSTestServletTest1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public JSTestServletTest4() {
+	public JSTestServletTest1() {
 		super();
 	}
 
@@ -20,12 +20,22 @@ public class JSTestServletTest4 extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 
-		int result = Integer.parseInt(request.getParameter("num1")) + Integer.parseInt(request.getParameter("num2"));
+		String data = request.getParameter("data");
 
+		/*
+		 * String result = data + " 잘 받았습니다^^";
+		 */
+		
 		response.setCharacterEncoding("utf-8");
-		response.getWriter().print("덧셈결과 : " + "\'" + result + "\'");
-		response.getWriter().close();
+		String result = null;
+		if (data.equals("mslove")) {
+			result = "1";
+		} else {
+			result = "0";
+		}
 
+		response.getWriter().println(result);
+		response.getWriter().close();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

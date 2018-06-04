@@ -1,4 +1,4 @@
-package js.test;
+package ajax.test;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

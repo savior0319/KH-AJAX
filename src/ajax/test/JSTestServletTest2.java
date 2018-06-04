@@ -1,4 +1,4 @@
-package js.test;
+package ajax.test;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "JSTestServlet", urlPatterns = { "/jsTest1" })
-public class JSTestServletTest1 extends HttpServlet {
+@WebServlet(name = "JSTest1Servlet", urlPatterns = { "/test1" })
+public class JSTestServletTest2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public JSTestServletTest1() {
+	public JSTestServletTest2() {
 		super();
 	}
 
@@ -20,22 +20,10 @@ public class JSTestServletTest1 extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 
-		String data = request.getParameter("data");
-
-		/*
-		 * String result = data + " 잘 받았습니다^^";
-		 */
+		String name = request.getParameter("myName");
 		
-		response.setCharacterEncoding("utf-8");
-		String result = null;
-		if (data.equals("mslove")) {
-			result = "1";
-		} else {
-			result = "0";
-		}
+		System.out.println(name);
 
-		response.getWriter().println(result);
-		response.getWriter().close();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
