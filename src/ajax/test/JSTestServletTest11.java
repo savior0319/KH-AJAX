@@ -2,7 +2,6 @@ package ajax.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,15 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import ajax.test.vo.UserVo;
 
-@WebServlet(name = "JSTest8Servlet", urlPatterns = { "/test8" })
-public class JSTestServletTest9 extends HttpServlet {
+@WebServlet(name = "JSTest10Servlet", urlPatterns = { "/test10" })
+public class JSTestServletTest11 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public JSTestServletTest9() {
+	public JSTestServletTest11() {
 		super();
 	}
 
@@ -27,15 +27,9 @@ public class JSTestServletTest9 extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");
-		String userIndexs = request.getParameter("userIndexs");
-		StringTokenizer st = new StringTokenizer(userIndexs, " ,");
-		ArrayList<Integer> userSelect = new ArrayList<Integer>();
-
-		while (st.hasMoreTokens()) {
-			userSelect.add(Integer.parseInt(st.nextToken().replace(" ", "")) - 1);
-		}
 
 		ArrayList<UserVo> aList = new ArrayList<UserVo>();
+
 		aList.add(new UserVo("홍길동", 20, "한국"));
 		aList.add(new UserVo("김말똥", 21, "미국"));
 		aList.add(new UserVo("김지똥", 22, "일본"));
@@ -48,26 +42,19 @@ public class JSTestServletTest9 extends HttpServlet {
 		aList.add(new UserVo("류민국", 29, "서울"));
 		aList.add(new UserVo("정민국", 99, "인천"));
 
-		JSONObject resultMap = new JSONObject();
-		// JSON 객체가 기본적으로 MAP 형태이기 때문에
-		// 키 : 값 형태로 사용 가능
+		JSONArray resultArray = new JSONArray();
 
-		int index = 0;
-
-		while (index < userSelect.size()) {
-			UserVo userVo = aList.get(userSelect.get(index));
+		for (UserVo user : aList) {
 			JSONObject result = new JSONObject();
-			result.put("name", userVo.getName());
-			result.put("age", userVo.getAge());
-			result.put("addr", userVo.getAddr());
-
-			resultMap.put(index, result);
-			index++;
+			result.put("name", user.getName());
+			result.put("age", user.getAge());
+			result.put("addr", user.getAddr());
+			resultArray.add(result);
 		}
-
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
-		response.getWriter().println(resultMap);
+		response.getWriter().println(resultArray);
 		response.getWriter().close();
 	}
 

@@ -30,11 +30,17 @@
 
 		#out3,
 		#out4,
-		#out5 {
+		#out5,
+		#out6,
+		#out7 {
 			width: 280px;
 			height: 230px;
 			border: 3px solid lightgray;
 			margin: 0 auto;
+		}
+
+		#selectList {
+			margin-top: 5px;
 		}
 	</style>
 
@@ -167,6 +173,54 @@
 				<div id="out5"></div>
 			</div>
 
+			<div class="ui center aligned segment">
+				<h1>9. 서버 정보 요청후 표(table) 구성하기</h1>
+
+				<button onclick="test9();" class="ui orange button">유저 정보 불러오기</button>
+				<br>
+				<table id="userTbl" class="ui table">
+					<thead>
+						<tr>
+							<th>이름</th>
+							<th>나이</th>
+							<th>주소</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<br>
+				<br>
+				<br>
+			</div>
+
+			<div class="ui center aligned segment">
+				<h1>10. 서버D에서 전송한 list 객체를 바탕으로 select 리스트 받아오기 </h1>
+				<div class="ui labeled input">
+					<div class="ui label">유저이름</div>
+					<input type="text" id="selectUserName" placeholder="입력" />
+				</div>
+				<button onclick="test10();" class="ui orange button">선택</button>
+				<br>
+				<select name="selectList" id="selectList"></select>
+			</div>
+
+			<div class="ui center aligned segment">
+				<h1>11. GSON을 이용한 List 받아오기 </h1>
+				<h5>자바객체 &lt; - &gt; JSON 상호 변환 가능</h5>
+				<button onclick="test11();" class="ui orange button">가져오기</button>
+				<br>
+				<br>
+				<p id="out6"></p>
+			</div>
+
+			<div class="ui center aligned segment">
+				<h1>12. GSON을 이용한 Map 받아오기 </h1>
+				<button onclick="test12();" class="ui orange button">가져오기</button>
+				<br>
+				<br>
+				<p id="out7"></p>
+			</div>
 			<br>
 			<br>
 			<br>
@@ -354,6 +408,109 @@
 					}
 
 					$('#out5').html(result);
+				},
+				error: function () {
+					console.log('실패');
+				}
+			});
+		}
+
+		function test9() {
+			var $userIndexs = $('#userIndexs2').val();
+
+			$.ajax({
+				url: '/test9',
+				type: 'GET',
+				data: {
+					userIndexs: $userIndexs
+				},
+				success: function (data) {
+					console.log('성공');
+
+					for (var i = 0; i < data.length; i++) {
+						var tr = $('<tr>');
+						var nameTd = $('<td>').text(data[i].name);
+						var ageTd = $('<td>').text(data[i].age);
+						var addrTd = $('<td>').text(data[i].addr);
+						tr.append(nameTd);
+						tr.append(ageTd);
+						tr.append(addrTd);
+
+						$('#userTbl').append(tr);
+					}
+				},
+				error: function () {
+					console.log('실패');
+				}
+			});
+		}
+
+		function test10() {
+			var selectUserName = $('#selectUserName').val();
+
+			$.ajax({
+				url: '/test10',
+				type: 'GET',
+				success: function (data) {
+					console.log('성공');
+
+					var selected = '';
+					$('#selectList').find('option').remove();
+
+					for (var i = 0; i < data.length; i++) {
+						var name = data[i].name;
+						if (name == selectUserName) {
+							selected = "selected";
+						} else {
+							selected = "";
+						}
+						$('#selectList').append('<option ' + selected + '>' + name + '</option>');
+					}
+
+				},
+				error: function () {
+					console.log('실패');
+				}
+			});
+		}
+
+		function test11() {
+
+			$.ajax({
+				url: '/test11',
+				type: 'GET',
+				success: function (data) {
+					console.log('성공');
+
+					var result = "";
+					for (var i = 0; i < data.length; i++) {
+						result += "이름 : " + data[i].name + " / 나이 : " + data[i].age + " / 주소 : " + data[i].addr + "<br>";
+					}
+
+					$('#out6').html(result);
+				},
+				error: function () {
+					console.log('실패');
+				}
+			});
+		}
+
+		function test12() {
+
+			$.ajax({
+				url: '/test12',
+				type: 'GET',
+				success: function (data) {
+					console.log('성공');
+					var result = "";
+					var keys = Object.keys(data);
+
+					for (var i = 0; i < keys.length; i++) {
+						result += "이름 : " + data[keys[i]].name + " / 나이 : " + data[keys[i]].age + " / 주소 : " + data[keys[i]].addr +
+							"<br>";
+					}
+					$('#out7').html(result);
+
 				},
 				error: function () {
 					console.log('실패');
